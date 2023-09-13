@@ -1,0 +1,51 @@
+CREATE TABLE bus_stanice(
+id_stanice SERIAL PRIMARY KEY,
+naziv_stanice VARCHAR(50) NOT NULL,
+x_osa INTEGER NOT NULL,
+y_osa INTEGER NOT NULL
+);
+
+SELECT * FROM bus_stanice
+
+DROP TABLE bus_stanice
+
+
+CREATE TABLE bus_linije(
+bus_id SERIAL PRIMARY KEY,
+naziv_linije VARCHAR (50) NOT NULL);
+
+INSERT INTO bus_linije (bus_id,naziv_linije)
+VALUES (11,'Linija A'),
+		(12,'Linija B'),
+		(13,'Linija C');
+
+SELECT * FROM bus_linije
+
+CREATE TABLE Rute(
+id_rute SERIAL NOT NULL,
+pocetna_stanica_id INTEGER NOT NULL,
+krajnja_stanica_id INTEGER NOT NULL,
+bus_id INTEGER NOT NULL,
+trajanje TIME NOT NULL,
+PRIMARY KEY(id_rute),
+FOREIGN KEY(pocetna_stanica_id)REFERENCES bus_stanice(id_stanice),
+FOREIGN KEY(krajnja_stanica_id)REFERENCES bus_stanice(id_stanice),
+FOREIGN KEY(bus_id)REFERENCES bus_linije(bus_id));
+
+SELECT * FROM Rute
+DROP TABLE Rute
+
+
+INSERT INTO Rute (id_rute,pocetna_stanica_id,krajnja_stanica_id,bus_id,trajanje)
+VALUES (1,1,4,11,'00:10:00'),
+		(2,4,2,11,'00:10:00'),
+		(3,1,3,12,'00:20:00'),
+		(4,3,5,12,'00:30:00'),
+		(5,2,3,13,'00:15:00'),
+		(6,3,6,13,'00:25:00'),
+		(7,4,1,11,'00:10:00'),
+		(8,2,4,11,'00:10:00'),
+		(9,3,1,12,'00:20:00'),
+		(10,5,3,12,'00:30:00'),
+		(11,3,2,13,'00:15:00'),
+		(12,6,3,13,'00:25:00');
